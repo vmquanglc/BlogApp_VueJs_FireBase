@@ -26,18 +26,16 @@ export default {
     };
   },
   created() {
-    firebase.auth().onAuthStateChanged(async (user)=>{
-      this.$store.commit('updateUser',user);
-      if(user){
-        const token  = await user.getIdTokenResult();
-        console.log('token',token);
-        this.$store.dispatch('getCurrentUser');
-        
+    firebase.auth().onAuthStateChanged(async (user) => {
+      this.$store.commit("updateUser", user);
+      if (user) {
+        const token = await user.getIdTokenResult();
+        console.log("token", token);
+        this.$store.dispatch("getCurrentUser");
       }
     });
     this.checkRouter();
     this.$store.dispatch("getPost");
-
   },
   mounted() {},
   methods: {
@@ -138,6 +136,17 @@ button,
   }
   &:hover {
     background-color: rgba(48, 48, 48, 0.7);
+  }
+}
+.title-input {
+  display: flex;
+  justify-content: space-between;
+  .right {
+    display: flex;
+  }
+  .left{
+    font-size: 13px;
+    color: red;
   }
 }
 .button-ghost {

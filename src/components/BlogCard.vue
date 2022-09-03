@@ -14,7 +14,7 @@
       <h6>
         Posted on:
         {{
-          new Date(post.blogDate).toLocaleString("en-us", { dateStyle: "long" })
+          new Date(post.blogDate).toLocaleDateString()
         }}
       </h6>
       <router-link

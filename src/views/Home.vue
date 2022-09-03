@@ -26,8 +26,8 @@ export default {
   data() {
     return {
       welcomeScreen: {
-        title: "Welcome",
-        blogPost: "Ahiiiiiiiiii",
+        title: "Welcome to my Blogs",
+        blogPost: "",
         welcomeScreen: true,
         photo: "coding",
       },

@@ -85,7 +85,7 @@ export default {
       h2 {
         font-size: 32px;
         font-weight: 300;
-        text-transform: uppercase;
+        // text-transform: uppercase;
         margin-bottom: 24px;
         @media (min-width: 700px) {
           font-size: 40px;
