@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-wrapper" :class="{'no-user': !user}">
+  <div class="blog-wrapper" :class="{ 'no-user': !user }">
     <div class="blog-content">
       <div>
         <h2 v-if="post.welcomeScreen">{{ post.title }}</h2>
@@ -16,7 +16,7 @@
         <router-link
           class="link"
           v-else
-          to="#"
+          :to="{ name: 'ViewBlog', params: { blogid: this.post.blogID } }"
         >
           View The Post<Arrow class="arrow" />
         </router-link>
@@ -28,11 +28,7 @@
         :src="require(`../assets/blogPhotos/${post.photo}.jpg`)"
         alt=""
       />
-      <img
-        v-else
-        :src="require(`../assets/blogPhotos/${post.blogCoverPhoto}.jpg`)"
-        alt=""
-      />
+      <img v-else :src="post.blogCoverPhoto" alt="" />
     </div>
   </div>
 </template>
@@ -118,7 +114,6 @@ export default {
         padding-bottom: 4px;
         border-bottom: 1px solid transparent;
         transition: 0.5s ease-in all;
-    
 
         &:hover {
           border-bottom-color: #303030;

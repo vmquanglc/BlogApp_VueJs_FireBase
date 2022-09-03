@@ -27,7 +27,7 @@
             <router-link class="link" :to="{ name: 'Blogs' }"
               >Blogs</router-link
             >
-            <router-link  class="link" to="#"
+            <router-link v-if="isAdmin" class="link" to="#"
               >Create Post</router-link
             >
             <router-link v-if="!user"  class="link" :to="{ name: 'Login' }"
@@ -60,9 +60,9 @@ export default {
     user() {
       return this.$store.state.user;
     },
-    // admin() {
-    //   return this.$store.state.profileAdmin;
-    // },
+    isAdmin(){
+      return this.$store.state.profileAdmin
+    }
   },
 };
 </script>

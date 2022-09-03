@@ -1,12 +1,12 @@
 <template>
   <div class="blog-card-wrap">
     <div class="blog-cards container">
-      <div class="toggle-edit">
+      <!-- <div class="toggle-edit">
         <span>Toggle Editing Post</span>
         <input type="checkbox" v-model="editPost" />
-      </div>
+      </div> -->
       <BlogCard
-        v-for="(item, index) in sampleBlogCards"
+        v-for="(item, index) in blogPosts"
         :key="index"
         :post="item"
       />
@@ -20,13 +20,14 @@ export default {
   name: "blogs",
   components: { BlogCard },
   computed: {
-    sampleBlogCards() {
-      const me = this;
-      return me.$store.state.sampleBlogCards;
-    },
-    // blogPosts() {
-    // //   return this.$store.state.blogPosts;
+    
+    // sampleBlogCards() {
+    //   const me = this;
+    //   return me.$store.state.sampleBlogCards;
     // },
+    blogPosts() {
+      return this.$store.state.blogPosts;
+    },
     /**
      * event click checkbox tùy chỉnh ẩn/hiện sửa xóa item
      * vmquang1 2/9/2022

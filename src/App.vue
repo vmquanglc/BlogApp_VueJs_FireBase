@@ -1,6 +1,6 @@
 <template>
   <div class="app-wrapper">
-    <div class="app">
+    <div class="app" v-if="this.$store.state.postLoaded">
       <Navigation v-show="isShowNavigation" />
       <router-view />
       <Footer v-show="isShowNavigation" />
@@ -26,14 +26,17 @@ export default {
     };
   },
   created() {
-    firebase.auth().onAuthStateChanged((user)=>{
+    firebase.auth().onAuthStateChanged(async (user)=>{
       this.$store.commit('updateUser',user);
       if(user){
+        const token  = await user.getIdTokenResult();
+        console.log('token',token);
         this.$store.dispatch('getCurrentUser');
         
       }
     });
     this.checkRouter();
+    this.$store.dispatch("getPost");
 
   },
   mounted() {},

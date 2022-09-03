@@ -2,7 +2,7 @@
   <div class="home">
     <BlogPost :post="welcomeScreen" v-if="!user"/>
     <BlogPost
-      v-for="(item, index) in sampleBlogPost"
+      v-for="(item, index) in blogPostsFeed"
       :key="index"
       :post="item"
     />
@@ -10,7 +10,7 @@
       <div class="container">
         <h3>View more recent blogs</h3>
         <div class="blog-cards">
-          <BlogCard v-for="(item, index) in sampleBlogCards" :key="index" :post="item"/>
+          <BlogCard v-for="(item, index) in blogPostsCards" :key="index" :post="item"/>
         </div>
       </div>
     </div>
@@ -50,9 +50,15 @@ export default {
     user() {
       return this.$store.state.user;
     },
-    sampleBlogCards(){
-      const me = this;
-      return me.$store.state.sampleBlogCards;
+    // sampleBlogCards(){
+    //   const me = this;
+    //   return me.$store.state.sampleBlogCards;
+    // }
+    blogPostsCards(){
+      return this.$store.getters.blogPostsCards
+    },
+    blogPostsFeed(){
+      return this.$store.getters.blogPostsFeed
     }
   }
 };

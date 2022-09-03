@@ -10,6 +10,13 @@ export default new Vuex.Store({
    * Data state
    */
   state: {
+    blogPosts: [],
+    postLoaded: null,
+    blogHTML: "Write your blog title here...",
+    blogTitle: "",
+    blogPhotoName: "",
+    blogPhotoFileURL: null,
+    blogPhotoPreview: null,
     /**
      * state lưu thông tin user
      */
@@ -28,7 +35,7 @@ export default new Vuex.Store({
      * state cờ cho phép show tính năng sửa/xóa post
      * vmquang1 2.9.2022
      */
-    editPost:false,
+    editPost:true,
     /**
      * data Fake
      */
@@ -126,6 +133,32 @@ export default new Vuex.Store({
     ],
   },
   mutations: {
+    setBlogState(state, payload) {
+      state.blogTitle = payload.blogTitle;
+      state.blogHTML = payload.blogHTML;
+      state.blogPhotoFileURL = payload.blogCoverPhoto;
+      state.blogPhotoName = payload.blogCoverPhotoName;
+    },
+    /**
+     * Mở xem ảnh preview
+     * @param {*} state state
+     */
+    openPhotoPreview(state) {
+      state.blogPhotoPreview = !state.blogPhotoPreview;
+    },
+    fileNameChange(state, payload) {
+      state.blogPhotoName = payload;
+    },
+    createFileURL(state, payload) {
+      state.blogPhotoFileURL = payload;
+    },
+    newBlogPost(state, payload) {
+      state.blogHTML = payload;
+      console.log(state.blogHTML);
+    },
+    updateBlogTitle(state, payload) {
+      state.blogTitle = payload;
+    },
     toggleEditPost(state,hasAllowEdit){
       state.editPost = hasAllowEdit;
       // console.log(state.editPost);
@@ -188,18 +221,71 @@ export default new Vuex.Store({
     changeUsername(state, payload) {
       state.profileUsername = payload;
     },
+    /**
+     * check ADmin user
+     * @param {*} state  state
+     * @param {*} payload isAdmin
+     */
+    setProfileAdmin(state,payload){
+      state.profileAdmin = payload;
+    },
+    filterBlogPost(state, payload) {
+      state.blogPosts = state.blogPosts.filter((post) => post.blogID !== payload);
+    },
+  },
+  getters:{
+    blogPostsFeed(state){
+      return state.blogPosts.slice(0,2)
+    },
+    blogPostsCards(state){
+      return state.blogPosts.slice(2,6)
+    }
   },
   actions: {
+    async updatePost({ commit, dispatch }, payload) {
+      commit("filterBlogPost", payload);
+      await dispatch("getPost");
+    },
+    async deletePost({ commit }, payload) {
+      const getPost = await db.collection("blogPosts").doc(payload);
+      await getPost.delete();
+      commit("filterBlogPost", payload);
+    },
+    async getPost({ state }) {
+      const dataBase = await db.collection("blogPosts").orderBy("date", "desc");
+      const dbResults = await dataBase.get();
+      dbResults.forEach((doc) => {
+        if (!state.blogPosts.some((post) => post.blogID === doc.id)) {
+          const data = {
+            blogID: doc.data().blogID,
+            blogHTML: doc.data().blogHTML,
+            blogCoverPhoto: doc.data().blogCoverPhoto,
+            blogTitle: doc.data().blogTitle,
+            blogDate: doc.data().date,
+            blogCoverPhotoName: doc.data().blogCoverPhotoName,
+          };
+          state.blogPosts.push(data);
+        }
+      });
+      state.postLoaded = true;
+    },
     /**
      * Hàm lấy thông tin user
      * @param {*} param
      * vmquang1 3.9.2022
      */
-    async getCurrentUser({commit}){
+    async getCurrentUser({commit},user){
       const dataBase = await db.collection('users').doc(firebase.auth().currentUser.uid);
       const dbResult = await dataBase.get();
       commit('setProfileInfo',dbResult);
       commit('setProfileInitials');
+      console.log(user);
+      // const token  = await user.getIdTokenResult();
+      // const admin = await token.claim.admin;
+      const isAdmin = true;
+      commit('setProfileAdmin',isAdmin);
+
+
     },
     /**
      * hàm cập nhật data

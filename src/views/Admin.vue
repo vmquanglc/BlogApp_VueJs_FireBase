@@ -30,6 +30,7 @@ export default {
     //   const addAdmin = await firebase.functions().httpsCallable("addAdminRole");
     //   const result = await addAdmin({ email: this.adminEmail });
     //   this.functionMsg = result.data.message;
+    console.log("Tính năng đang phát triển");
     },
   },
 };

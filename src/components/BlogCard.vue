@@ -1,6 +1,6 @@
 <template>
   <div class="blog-card">
-    <div v-show="editPost" class="icons">
+    <div v-show="editPost && isAdmin" class="icons">
       <div @click="editBlog" class="icon">
         <Edit class="edit" />
       </div>
@@ -8,7 +8,7 @@
         <Delete class="delete" />
       </div>
     </div>
-    <img :src="require(`../assets/blogCards/${post.blogCoverPhoto}.jpg`)" alt="" />
+    <img :src="post.blogCoverPhoto" alt="" />
     <div class="info">
       <h4>{{ post.blogTitle }}</h4>
       <h6>
@@ -19,7 +19,7 @@
       </h6>
       <router-link
         class="link"
-        to="#"
+        :to="{ name: 'ViewBlog', params: { blogid: this.post.blogID } }"
       >
         View The Post <Arrow class="arrow" />
       </router-link>
@@ -45,13 +45,16 @@ export default {
   },
   methods: {
     deletePost() {
-      //this.$store.dispatch("deletePost", this.post.blogID);
+      this.$store.dispatch("deletePost", this.post.blogID);
     },
     editBlog() {
-      //this.$router.push({ name: "EditBlog", params: { blogid: this.post.blogID } });
+      this.$router.push({ name: "EditBlog", params: { blogid: this.post.blogID } });
     },
   },
   computed: {
+    isAdmin(){
+      return this.$store.state.profileAdmin
+    },
     editPost() {
       return this.$store.state.editPost;
     },

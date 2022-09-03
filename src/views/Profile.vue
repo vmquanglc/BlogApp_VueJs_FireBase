@@ -5,7 +5,7 @@
       <h2>Account Settings</h2>
       <div class="profile-info">
         <div class="initials">{{ $store.state.profileInitials }}</div>
-        <div class="admin-badge">
+        <div v-if="isAdmin" class="admin-badge">
           <adminIcon class="icon" />
           <span>admin</span>
         </div>
@@ -65,6 +65,9 @@ export default {
     },
   },
   computed: {
+    isAdmin(){
+      return this.$store.state.profileAdmin
+    },
     firstName: {
       get() {
         return this.$store.state.profileFirstName;
