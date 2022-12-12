@@ -16,6 +16,12 @@
           <router-link v-if="!user" class="link" :to="{ name: 'Login' }"
             >{{i18n.Common.LoginOrRegister}}</router-link
           >
+          <!-- <router-link v-if="isAdmin" class="link" :to="{ name: 'AuditingLogs' }"
+            >Auditing logs</router-link
+          >
+          <router-link v-if="isAdmin" class="link" :to="{ name: 'Report' }"
+            >Report</router-link
+          > -->
         </ul>
         <!-- dropdown info user -->
         <div

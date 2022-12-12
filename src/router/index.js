@@ -4,6 +4,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Blogs from "../views/Blogs.vue";
+import AuditingLogs from "../views/AuditingLogs.vue";
+import Report from "../views/Report.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import ForgotPassword from "../views/ForgotPassword";
@@ -98,6 +100,27 @@ const routes = [
       requiresAuth:true,
       requiresAdmin:true
 
+    }
+  },
+  {
+    path: "/report",
+    name: "Report",
+    component: Report,
+    meta: {
+      title: 'Report',
+      requiresAuth:true,
+      requiresAdmin:true
+
+    }
+  },
+  {
+    path: "/auditing-logs",
+    name: "AuditingLogs",
+    component: AuditingLogs,
+    meta: {
+      title: 'AuditingLogs',
+      requiresAuth:true,
+      requiresAdmin:true
     }
   },
   {

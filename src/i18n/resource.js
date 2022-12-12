@@ -14,7 +14,7 @@ export default {
     Common:{
         AccountSettings:"Account Settings",
         Copyright:"Copyright © 2022 Vu Minh Quang",
-        TitleApp:"QuangStar's Blogs",
+        TitleApp:"Quang's Blogs",
         ViewDetail:"VIEW THE POST",
         Profile:"Profile",
         Admin:"Admin",
